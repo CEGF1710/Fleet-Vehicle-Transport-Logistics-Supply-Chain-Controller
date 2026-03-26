@@ -1,95 +1,70 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import { getTrips } from './actions/trips'
+import { getVehicles } from './actions/vehicles'
+import { getDrivers } from './actions/drivers'
+import TripForm from '@/components/TripForm'
 
-export default function Home() {
+export const dynamic = 'force-dynamic'
+
+export default async function DashboardPage() {
+  const trips = await getTrips()
+  const vehicles = await getVehicles()
+  const drivers = await getDrivers()
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
+    <>
+      <div className="page-header">
+        <h1>Dashboard - Registro Logístico de Viajes</h1>
+      </div>
+      
+      <div className="dashboard-grid">
+        <div className="card">
+          <h3 style={{ marginBottom: '1rem' }}>Auditoría Cronológica de Flota</h3>
+          <div className="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Vehículo</th>
+                  <th>Conductor</th>
+                  <th>KMs (In - Fn)</th>
+                  <th>Distancia</th>
+                  <th>Combustible</th>
+                  <th>Rendimiento</th>
+                </tr>
+              </thead>
+              <tbody>
+                {trips.length === 0 ? (
+                  <tr><td colSpan={7} style={{ textAlign: 'center' }}>No hay viajes registrados</td></tr>
+                ) : (
+                  trips.map(trip => {
+                    const effClass = trip.efficiency > 10 ? 'success' : (trip.efficiency < 5 ? 'error' : 'warning')
+                    return (
+                      <tr key={trip.id}>
+                        <td>{new Date(trip.date).toISOString().split('T')[0]}</td>
+                        <td>{trip.vehicle.plate}</td>
+                        <td>{trip.driver.name}</td>
+                        <td>{trip.initialKm} - {trip.finalKm}</td>
+                        <td>{trip.distance} km</td>
+                        <td>{trip.litersConsumed} L</td>
+                        <td>
+                          <span className={`badge ${effClass}`}>
+                            {trip.efficiency.toFixed(2)} km/L
+                          </span>
+                        </td>
+                      </tr>
+                    )
+                  })
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+
+        <div className="card">
+          <h3 style={{ marginBottom: '1rem' }}>Registrar Nuevo Viaje</h3>
+          <TripForm vehicles={vehicles} drivers={drivers} />
+        </div>
+      </div>
+    </>
+  )
 }

@@ -1,0 +1,96 @@
+﻿
+> temp-app@0.1.0 build
+> next build
+
+  Γû▓ Next.js 14.2.15
+  - Environments: .env
+
+   Creating an optimized production build ...
+ Γ£ô Compiled successfully
+   Linting and checking validity of types ...
+node.exe : 
+At line:1 char:1
++ & "C:\Program 
+Files\nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo        
+      : NotSpecified: (:  
+  String) [], RemoteExc   
+ eption
+    + FullyQualifiedError 
+   Id : NativeCommandErr  
+  or
+ 
+Failed to compile.
+
+./src/app/actions/drivers.
+ts
+10:47  Error: Unexpected 
+any. Specify a different 
+type.  @typescript-eslint/
+no-explicit-any
+25:19  Error: Unexpected 
+any. Specify a different 
+type.  @typescript-eslint/
+no-explicit-any
+
+./src/app/actions/trips.ts
+27:45  Error: Unexpected 
+any. Specify a different 
+type.  @typescript-eslint/
+no-explicit-any
+
+./src/app/actions/vehicles
+.ts
+10:48  Error: Unexpected 
+any. Specify a different 
+type.  @typescript-eslint/
+no-explicit-any
+26:19  Error: Unexpected 
+any. Specify a different 
+type.  @typescript-eslint/
+no-explicit-any
+
+./src/components/DriverFor
+m.tsx
+10:60  Error: Unexpected 
+any. Specify a different 
+type.  @typescript-eslint/
+no-explicit-any
+
+./src/components/TripForm.
+tsx
+9:69  Error: Unexpected 
+any. Specify a different 
+type.  @typescript-eslint/
+no-explicit-any
+9:85  Error: Unexpected 
+any. Specify a different 
+type.  @typescript-eslint/
+no-explicit-any
+10:58  Error: Unexpected 
+any. Specify a different 
+type.  @typescript-eslint/
+no-explicit-any
+
+./src/components/VehicleFo
+rm.tsx
+10:61  Error: Unexpected 
+any. Specify a different 
+type.  @typescript-eslint/
+no-explicit-any
+
+./src/lib/prisma.ts
+8:3  Error: Unexpected 
+var, use let or const 
+instead.  no-var
+
+info  - Need to disable 
+some ESLint rules? Learn 
+more here: https://nextjs.
+org/docs/basic-features/es
+lint#disabling-rules
