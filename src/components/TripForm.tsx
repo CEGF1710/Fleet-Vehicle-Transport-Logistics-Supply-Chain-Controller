@@ -6,7 +6,7 @@ import { useEffect, useRef } from 'react'
 
 const initialState = { error: '', success: false }
 
-export default function TripForm({ vehicles, drivers }: { vehicles: {id: string, plate: string, model: string}[], drivers: {id: string, name: string, licenseNumber: string}[] }) {
+export default function TripForm({ vehicles, drivers }: { vehicles: { id: string, plate: string, model: string }[], drivers: { id: string, name: string, licenseNumber: string }[] }) {
   const [state, formAction] = useFormState(createTrip as any, initialState as any)
   const formRef = useRef<HTMLFormElement>(null)
 
@@ -20,7 +20,7 @@ export default function TripForm({ vehicles, drivers }: { vehicles: {id: string,
     <form ref={formRef} action={formAction}>
       {state?.error && <div className="alert error">{state.error}</div>}
       {state?.success && <div className="alert success">Viaje registrado exitosamente.</div>}
-      
+
       <div className="form-group">
         <label>Vehículo</label>
         <select name="vehicleId" required>
@@ -30,7 +30,7 @@ export default function TripForm({ vehicles, drivers }: { vehicles: {id: string,
           ))}
         </select>
       </div>
-      
+
       <div className="form-group">
         <label>Conductor</label>
         <select name="driverId" required>
@@ -49,18 +49,18 @@ export default function TripForm({ vehicles, drivers }: { vehicles: {id: string,
       <div className="form-row">
         <div className="form-group">
           <label>Kilometraje Inicial</label>
-          <input type="number" step="0.1" name="initialKm" required />
+          <input type="number" step="0.1" name="initialKm" min="0" required />
         </div>
 
         <div className="form-group">
           <label>Kilometraje Final</label>
-          <input type="number" step="0.1" name="finalKm" required />
+          <input type="number" step="0.1" name="finalKm" min="0" required />
         </div>
       </div>
 
       <div className="form-group">
         <label>Litros Consumidos</label>
-        <input type="number" step="0.1" name="litersConsumed" required />
+        <input type="number" step="0.1" name="litersConsumed" min="0" required />
       </div>
 
       <button type="submit" className="btn" style={{ width: '100%', marginTop: '1rem' }}>

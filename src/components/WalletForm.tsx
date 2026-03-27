@@ -20,7 +20,7 @@ export default function WalletForm({ vehicles, drivers }: { vehicles: any[], dri
     <form ref={formRef} action={formAction}>
       {state?.error && <div className="alert error">{state.error}</div>}
       {state?.success && <div className="alert success">Billetera creada y presupuesto asignado.</div>}
-      
+
       <div className="form-group">
         <label>Tipo de Entidad</label>
         <select name="entityType" required defaultValue="">
@@ -46,10 +46,10 @@ export default function WalletForm({ vehicles, drivers }: { vehicles: any[], dri
           </optgroup>
         </select>
       </div>
-      
+
       <div className="form-group">
         <label>Presupuesto Inicial ($)</label>
-        <input type="number" step="0.01" name="budget" required placeholder="Ej. 1500.00" />
+        <input type="number" step="0.01" name="budget" min="0" required placeholder="Ej. 1500.00" />
       </div>
 
       <button type="submit" className="btn" style={{ width: '100%' }}>Asignar Billetera</button>

@@ -16,6 +16,10 @@ export async function createWallet(prevState: unknown, formData: FormData) {
     return { error: 'Todos los campos son obligatorios y el presupuesto debe ser numérico' }
   }
 
+  if (budget < 0) {
+    return { error: 'El presupuesto no puede ser negativo' }
+  }
+
   try {
     await prisma.wallet.create({
       data: {

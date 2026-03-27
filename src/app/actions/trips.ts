@@ -36,6 +36,10 @@ export async function createTrip(prevState: unknown, formData: FormData) {
     return { error: 'Faltan datos obligatorios o son inválidos' }
   }
 
+  if (initialKm < 0 || finalKm < 0 || litersConsumed < 0) {
+    return { error: 'Los valores numéricos no pueden ser negativos' }
+  }
+
   if (finalKm <= initialKm) {
     return { error: 'El kilometraje final debe ser mayor al inicial' }
   }
@@ -49,7 +53,7 @@ export async function createTrip(prevState: unknown, formData: FormData) {
   })
 
   if (lastTrip && initialKm < lastTrip.finalKm) {
-    return { 
+    return {
       error: `Inconsistencia: El KM inicial (${initialKm}) no puede ser menor al KM final del viaje anterior (${lastTrip.finalKm}) para este vehículo.`
     }
   }
@@ -57,7 +61,7 @@ export async function createTrip(prevState: unknown, formData: FormData) {
   try {
     // Backend Logic: Wallet Module Integration
     const cost = litersConsumed * 1.5 // Estimated fuel cost factor
-    
+
     // Find wallet by vehicle first
     let wallet = await prisma.wallet.findFirst({ where: { entityId: vehicleId } })
     if (!wallet) {
@@ -66,7 +70,7 @@ export async function createTrip(prevState: unknown, formData: FormData) {
     }
 
     if (wallet && wallet.balance < cost) {
-       return { error: 'Presupuesto insuficiente en la billetera asignada para cubrir este viaje.' }
+      return { error: 'Presupuesto insuficiente en la billetera asignada para cubrir este viaje.' }
     }
 
     // Use transaction to ensure data integrity
