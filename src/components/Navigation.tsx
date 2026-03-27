@@ -17,6 +17,9 @@ export default function Navigation() {
       <Link href="/drivers" className={pathname === '/drivers' ? 'active' : ''}>
         Conductores
       </Link>
+      <Link href="/wallets" className={pathname === '/wallets' ? 'active' : ''}>
+        Billeteras
+      </Link>
     </nav>
   )
 }

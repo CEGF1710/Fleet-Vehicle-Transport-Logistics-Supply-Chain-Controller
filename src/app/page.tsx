@@ -3,6 +3,8 @@ import { getVehicles } from './actions/vehicles'
 import { getDrivers } from './actions/drivers'
 import TripForm from '@/components/TripForm'
 
+import DashboardAnalytics from '@/components/DashboardAnalytics'
+
 export const dynamic = 'force-dynamic'
 
 export default async function DashboardPage() {
@@ -16,6 +18,8 @@ export default async function DashboardPage() {
         <h1>Dashboard - Registro Logístico de Viajes</h1>
       </div>
       
+      <DashboardAnalytics trips={trips} vehicles={vehicles} />
+
       <div className="dashboard-grid">
         <div className="card">
           <h3 style={{ marginBottom: '1rem' }}>Auditoría Cronológica de Flota</h3>

@@ -39,3 +39,13 @@ model Trip {
   vehicle Vehicle @relation(fields: [vehicleId], references: [id])
   driver  Driver  @relation(fields: [driverId], references: [id])
 }
+
+model Wallet {
+  id         String   @id @default(cuid())
+  entityType String   // "VEHICLE" | "DRIVER"
+  entityId   String   @unique
+  budget     Float    @default(0)
+  balance    Float    @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}

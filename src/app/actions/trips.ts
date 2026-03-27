@@ -55,18 +55,37 @@ export async function createTrip(prevState: unknown, formData: FormData) {
   }
 
   try {
-    await prisma.trip.create({
-      data: {
-        vehicleId,
-        driverId,
-        date,
-        initialKm,
-        finalKm,
-        litersConsumed
+    // Backend Logic: Wallet Module Integration
+    const cost = litersConsumed * 1.5 // Estimated fuel cost factor
+    
+    // Find wallet by vehicle first
+    let wallet = await prisma.wallet.findFirst({ where: { entityId: vehicleId } })
+    if (!wallet) {
+      // Find wallet by driver if vehicle doesn't have one
+      wallet = await prisma.wallet.findFirst({ where: { entityId: driverId } })
+    }
+
+    if (wallet && wallet.balance < cost) {
+       return { error: 'Presupuesto insuficiente en la billetera asignada para cubrir este viaje.' }
+    }
+
+    // Use transaction to ensure data integrity
+    await prisma.$transaction(async (tx) => {
+      await tx.trip.create({
+        data: { vehicleId, driverId, date, initialKm, finalKm, litersConsumed }
+      })
+
+      if (wallet) {
+        await tx.wallet.update({
+          where: { id: wallet.id },
+          data: { balance: { decrement: cost } }
+        })
       }
     })
+
     revalidatePath('/')
     revalidatePath('/trips')
+    revalidatePath('/wallets')
     return { success: true }
   } catch (error) {
     console.error(error)
