@@ -1,4 +1,5 @@
 Es una plataforma web fuertemente inspirada en Odoo Fleet enfocada en la eficiencia logística. Trabaja en base a un Dashboard Principal y dos formularios satélite (Entidades de Negocio).
+
 -Funcionamiento
 1. Gestor de Flota y Conductores: Primero debes "alimentar" al sistema de los datos mínimos y registrar un par de Vehículos y Choferes con sus respectivas matrículas y licencias para poder emparejarlos.
 2. Dashboard de Viajes: Aquí el despachador crea las rutas escogiendo al Vehículo y Chofer guardados. El despachador solo pone la "Fecha", el "Kilometraje al salir" (Inicial), el "Kilometraje al volver" (Final) y cuántos litros de gasolina gastó en esa ruta. 
